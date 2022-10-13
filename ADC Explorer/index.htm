@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>ADC Explorer by James Trimble</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.1.3/css/bootstrap-slider.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.1.3/bootstrap-slider.min.js"></script>
+
+</head>
+<body>
+
+<div id="parent-container" class="container" >
+    <div id="header-area" class="row center-block" style="width: 100%x;">
+        <center><h1>ADC Explorer</h1></center>
+    </div>
+    
+    <div id="graph-area" class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Graphs</div>
+            <div class="panel-body">
+                <div class="row" style="height: 270px;">
+                    <div id="graph-vin" class="col-md-4 center-block" style="width: 50%; height: 250px;"></div>
+                    <div id="graph-vout" class="col-md-4 center-block" style="width: 50%; height: 250px;"></div>
+                    </div>
+                    <div class="row center-block" style="width: 50%">
+                        <center>
+                            <span data-bind="if: clipping()" class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clipping Present</span>
+                            <span data-bind="if: !clipping()" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Clipping Not Present</span>
+                            <span data-bind="if: aliasing()" class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Aliasing Present</span>
+                            <span data-bind="if: !aliasing()" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aliasing Not Present</span>
+                            <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Quantization Error Present</span>
+                        </center>
+                    </div>
+           </div>
+        </div>
+    </div>
+    
+    <div id="parameters-area" class="row center-block" style="width: 100%">
+        <div id="parameters-vin" class="col-md-4 center-block" style="width: 50%">
+            <div class="panel panel-default">
+                <div class="panel-heading">Vin Parameters</div>
+                <div class="panel-body">
+                    Bias: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_b"></span>&nbsp;&nbsp;&nbsp;<input id="vin_b" data-bind="value: vin_b" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5" data-slider-orientation="horizontal"/><br><br>
+                    Amplitude: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_a"></span>&nbsp;&nbsp;&nbsp;<input id="vin_a" data-bind="value: vin_a" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5" data-slider-orientation="horizontal"/><br><br>
+                    Frequency: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_f"></span>&nbsp;&nbsp;&nbsp;<input id="vin_f" data-bind="value: vin_f" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" data-slider-orientation="horizontal"/><br>
+                </div>
+            </div>
+        </div>
+
+    
+        <div id="parameters-adc" class="col-md-4 center-block" style="width: 50%">
+            <div class="panel panel-default">
+                <div class="panel-heading">ADC Parameters</div>
+                <div class="panel-body">
+                    Vmax: &nbsp;&nbsp;&nbsp;<span data-bind="text: adc_vmax"></span>&nbsp;&nbsp;&nbsp;<input id="adc_vmax" data-bind="value: adc_vmax" type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="10" data-slider-orientation="horizontal"/><br><br>
+                    Vmin: &nbsp;&nbsp;&nbsp;<span data-bind="text: adc_vmin"></span>&nbsp;&nbsp;&nbsp;<input id="adc_vmin" data-bind="value: adc_vmin" type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal"/><br><br>
+                    Sampling frequency: &nbsp;&nbsp;&nbsp;<span data-bind="text: adc_fs"></span>&nbsp;&nbsp;&nbsp;<input id="adc_fs" data-bind="value: adc_fs" type="text" data-slider-min="1" data-slider-max="500" data-slider-step="1" data-slider-value="100" data-slider-orientation="horizontal"/><br><br>
+                    Bits: &nbsp;&nbsp;&nbsp;<span data-bind="text: adc_b"></span>&nbsp;&nbsp;&nbsp;<input id="adc_b" data-bind="value: adc_b" type="text" data-slider-min="1" data-slider-max="16" data-slider-step="1" data-slider-value="4" data-slider-orientation="horizontal"/><br><br>
+                    Resolution: <span data-bind="text: adc_resolution()"></span> V/level<br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;"><font size="2">Created by James Trimble, 2016</font></div>    
+        
+
+        
+
+
+<script src="adcexplorer.js"></script>
+</body>

@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>AC Signal Explorer by James Trimble</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.1.3/css/bootstrap-slider.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.1.3/bootstrap-slider.min.js"></script>
+
+</head>
+<body>
+
+<div id="parent-container" class="container" >
+    <div id="header-area" class="row center-block" style="width: 100%x;">
+        <center><h1>AC Signal Explorer</h1></center>
+    </div>
+    
+    <div id="graph-area" class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Graph</div>
+            <div class="panel-body">
+                <div class="row" style="height: 270px;">
+                    <div id="graph-vin" class="center-block" style="width: 100%; height: 250px;"></div>          
+                </div>                    
+		<div class="row">
+		    <div id="equ" class="col-md-4 center-block" style="width: 100%;">
+		    <center><font size="40">V(t)=<span data-bind="text: vin_b"></span>+<span data-bind="text: vin_a"></span>cos(360*<span data-bind="text: vin_f"></span>t-<span data-bind="text: vin_p"></span>) V</font></center>
+		    </div>
+           </div>
+        </div>
+    </div>
+    
+    <div id="parameters-area" class="row center-block" style="width: 100%">
+        <div id="parameters-vin" class="col-md-4 center-block" style="width: 100%">
+            <div class="panel panel-default">
+                <div class="panel-heading">Parameters</div>
+                <div class="panel-body">
+                    Bias: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_b"></span>&nbsp;&nbsp;&nbsp;<input id="vin_b" data-bind="value: vin_b" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5" data-slider-orientation="horizontal"/><br><br>
+                    Amplitude: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_a"></span>&nbsp;&nbsp;&nbsp;<input id="vin_a" data-bind="value: vin_a" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5" data-slider-orientation="horizontal"/><br><br>
+                    Frequency: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_f"></span>&nbsp;&nbsp;&nbsp;<input id="vin_f" data-bind="value: vin_f" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="10" data-slider-orientation="horizontal"/><br><br>
+		    Phase: &nbsp;&nbsp;&nbsp;<span data-bind="text: vin_p"></span>&nbsp;&nbsp;&nbsp;<input id="vin_p" data-bind="value: vin_p" type="text" data-slider-min="0" data-slider-max="360" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal"/><br><br>
+                </div>
+            </div>
+        </div>
+
+    
+        
+    </div>
+</div>
+<div style="position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;"><font size="2">Created by James Trimble, 2022</font></div>    
+        
+
+        
+
+
+<script src="acsignalexplorer.js"></script>
+</body>
